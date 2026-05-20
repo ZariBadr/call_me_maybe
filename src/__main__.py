@@ -1,4 +1,6 @@
 ﻿import argparse
+from src.loader import load_func_def
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -14,7 +16,7 @@ def parse_arguments():
     parser.add_argument(
         "--functions_definition",
         type=str,
-        default="data/input/functions_definition.json"
+        default="data/input/function_definitions.json"
     )
 
     parser.add_argument(
@@ -31,16 +33,16 @@ def parse_arguments():
 
     return parser.parse_args()
 
-def load_func_def(path):
-    pass
-
 
 def main():
     print("Starting")
     args = parse_arguments()
     # print(args.input)
     # print(args.output)
-    print(">>> Loading functions and prompts")
-    func = load_func_def()
+    print(">>>>>>>> Loading functions and prompts <<<<<<<<<")
+    func = load_func_def(args.functions_definition)
+    if not func:
+        raise RuntimeError(f"There is no function definition.")
+    print(func)
 
 main()

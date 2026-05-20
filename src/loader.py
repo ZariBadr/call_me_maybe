@@ -1,4 +1,4 @@
-from models.validator import function_definition
+from src.models.validator import function_definition
 import json
 
 
@@ -11,7 +11,3 @@ def load_func_def(path: str):
         raise RuntimeError(f"Invalid JSON :{path}")
     except FileNotFoundError:
         raise RuntimeError(f"Not Found: {path}")
-    
-function = load_func_def("data/input/function_definitions.json")
-for f in function:
-    print(f"{f} \n")
