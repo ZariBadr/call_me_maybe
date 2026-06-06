@@ -1,6 +1,6 @@
 ﻿import argparse
 from src.loader import load_func_def
-
+from src.loader import loading_prompts
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -10,7 +10,7 @@ def parse_arguments():
     parser.add_argument(
         "--input",
         type=str,
-        default="data/input/funtion_calling_tests.json"
+        default="data/input/function_calling_tests.json"
     )
 
     parser.add_argument(
@@ -35,7 +35,7 @@ def parse_arguments():
 
 
 def main():
-    print("Starting")
+    print(">>>>>>>> Starting function and prompts <<<<<<<<<")
     args = parse_arguments()
     # print(args.input)
     # print(args.output)
@@ -43,6 +43,15 @@ def main():
     func = load_func_def(args.functions_definition)
     if not func:
         raise RuntimeError(f"There is no function definition.")
-    print(func)
+    prompts = loading_prompts(args.input)
+    if not prompts:
+        raise RuntimeError(
+            f"prompts file is empty!"
+        )
 
-main()
+    sys = build_sys_prompts(func)
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(e)
